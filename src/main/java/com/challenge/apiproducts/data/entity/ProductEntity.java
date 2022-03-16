@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -12,7 +14,9 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "product")
+@Table(name = "products")
+@SQLDelete(sql = "UPDATE products SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class ProductEntity {
 
     @Id
@@ -35,4 +39,6 @@ public class ProductEntity {
     private Double price;
 
     private String currency;
+
+    private boolean deleted = Boolean.FALSE;
 }

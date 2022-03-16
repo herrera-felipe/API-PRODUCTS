@@ -5,17 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "`user`")
+@SQLDelete(sql = "UPDATE user SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class UserEntity {
 
     @Id
@@ -23,8 +29,9 @@ public class UserEntity {
     private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate created;
+    private LocalDateTime created;
 
+    @Column(unique = true)
     private String email;
 
     @Column(name = "first_name")
@@ -36,9 +43,13 @@ public class UserEntity {
     private String password;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate updated;
+    private LocalDateTime updated;
 
+    @Column(unique = true)
     private String username;
 
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<RoleEntity> role = new ArrayList<>();
+
+    private boolean deleted = Boolean.FALSE;
 }

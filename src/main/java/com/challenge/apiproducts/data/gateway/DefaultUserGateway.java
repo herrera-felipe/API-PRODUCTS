@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.*;
 
@@ -78,10 +77,10 @@ public class DefaultUserGateway implements UserGateway {
 
 
     @Override
-    public UserModel update(long id, UserModel userModel) {
-        UserEntity entity = userRepository.findById(id).orElseThrow( () -> {
-            return new ResourceNotFoundException("User not found");
-        });
+    public UserModel update(Long id, UserModel userModel) {
+        UserEntity entity = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User not found")
+        );
 
         if (!Objects.equals(entity.getEmail(), userModel.getEmail())
                 && userRepository.findByEmail(userModel.getEmail()).isPresent()) {

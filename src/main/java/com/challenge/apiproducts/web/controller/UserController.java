@@ -58,7 +58,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(roleDTO);
     }
 
-    @PostMapping("/add/role")
+    @PostMapping("/add-role")
     public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
@@ -114,12 +114,12 @@ public class UserController {
                 .name(model.getName())
                 .build();
     }
-}
 
-@Data
-class RoleToUserForm {
-    private String username;
-    private String roleName;
+    @Data
+    private static class RoleToUserForm {
+        private String username;
+        private String roleName;
+    }
 }
 
 

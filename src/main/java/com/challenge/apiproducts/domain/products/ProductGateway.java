@@ -7,6 +7,6 @@ public interface ProductGateway {
     ProductModel save(ProductModel product);
     List<ProductModel> findAll();
     ProductModel findByName(String name);
-    ProductModel update(long id, ProductModel product);
-    void delete(long id);
+    ProductModel update(Long id, ProductModel product);
+    void delete(Long id);
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.*;
 
@@ -50,13 +51,22 @@ public class DefaultUserGateway implements UserGateway {
     public void addRoleToUser(String username, String roleName) {
         UserEntity userEntity = userRepository.findByUsername(username);
         RoleEntity roleEntity = roleRepository.findByName(roleName);
-        userEntity.getRole().add(roleEntity);
+        userEntity.getRoles().add(roleEntity);
     }
 
 
     @Override
     public UserModel findByUsername(String username) {
         return toModel(userRepository.findByUsername(username));
+    }
+
+    @Override
+    public UserModel findByEmail(String email) {
+        UserEntity entity = userRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User not found")
+                );
+        return toModel(entity);
     }
 
 
@@ -93,7 +103,7 @@ public class DefaultUserGateway implements UserGateway {
                 .password(userModel.getPassword())
                 .updated(userModel.getUpdated())
                 .username(userModel.getUsername())
-                .role(userModel.getRole())
+                .roles(userModel.getRoles())
                 .build();
     }
 
@@ -107,7 +117,8 @@ public class DefaultUserGateway implements UserGateway {
                 .lastName(entity.getLastName())
                 .password(entity.getPassword())
                 .updated(entity.getUpdated())
-                .role(entity.getRole())
+                .username(entity.getUsername())
+                .roles(entity.getRoles())
                 .build();
     }
 
@@ -118,7 +129,7 @@ public class DefaultUserGateway implements UserGateway {
         entity.setLastName(model.getLastName());
         entity.setPassword(model.getPassword());
         entity.setUpdated(LocalDateTime.now());
-        entity.setRole(model.getRole());
+        entity.setRoles(model.getRoles());
         return entity;
     }
 

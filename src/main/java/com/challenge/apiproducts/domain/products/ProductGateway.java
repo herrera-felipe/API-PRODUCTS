@@ -1,2 +1,12 @@
-package com.challenge.apiproducts.domain.products;public interface ProductGateway {
+package com.challenge.apiproducts.domain.products;
+
+import java.util.List;
+
+public interface ProductGateway {
+
+    ProductModel save(ProductModel product);
+    List<ProductModel> findAll();
+    ProductModel findByName(String name);
+    ProductModel update(long id, ProductModel product);
+    void delete(long id);
 }

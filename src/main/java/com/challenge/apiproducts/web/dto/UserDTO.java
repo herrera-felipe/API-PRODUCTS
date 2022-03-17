@@ -10,7 +10,7 @@ import java.util.Collection;
 @Data
 @Builder
 public class UserDTO {
-    private Integer id;
+    private Long id;
     private LocalDateTime created;
     private String email;
     private String firstName;

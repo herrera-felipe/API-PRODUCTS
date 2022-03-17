@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ProductModel {
-    private Integer id;
+    private Long id;
     private Long SKU;
     private Integer code;
     private String name;

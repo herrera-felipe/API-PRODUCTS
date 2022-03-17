@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ProductModel {
-    private Long id;
+    private Integer id;
     private Long SKU;
-    private Long code;
+    private Integer code;
     private String name;
     private String description;
     private String picture;

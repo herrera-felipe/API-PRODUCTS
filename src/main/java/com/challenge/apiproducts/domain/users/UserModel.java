@@ -12,7 +12,7 @@ import java.util.Collection;
 @Setter
 @Builder
 public class UserModel {
-    private Integer id;
+    private Long id;
     private LocalDateTime created;
     private String email;
     private String firstName;

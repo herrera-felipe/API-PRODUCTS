@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
 @Setter
 @Builder
 public class UserModel {
-    private Long id;
+    private Integer id;
     private LocalDateTime created;
     private String email;
     private String firstName;
@@ -21,5 +20,5 @@ public class UserModel {
     private String password;
     private LocalDateTime updated;
     private String username;
-    private Collection<RoleEntity> role = new ArrayList<>();
+    private Collection<RoleEntity> roles;
 }

@@ -36,6 +36,10 @@ public class UserService {
         return userGateway.findByUsername(username);
     }
 
+    public UserModel findByEmail(String email) {
+        return userGateway.findByEmail(email);
+    }
+
     public List<UserModel> findAll() {
         return userGateway.findAll();
     }

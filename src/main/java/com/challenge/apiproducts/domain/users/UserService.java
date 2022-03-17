@@ -20,7 +20,7 @@ public class UserService {
         return userGateway.save(userModel);
     }
 
-    public UserModel update(long id, UserModel userModel) {
+    public UserModel update(Long id, UserModel userModel) {
         return userGateway.update(id, userModel);
     }
 

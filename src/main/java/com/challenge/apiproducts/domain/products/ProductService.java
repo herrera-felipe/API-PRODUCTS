@@ -27,11 +27,11 @@ public class ProductService {
         return productGateway.findByName(name);
     }
 
-    public ProductModel update(long id, ProductModel product) {
+    public ProductModel update(Long id, ProductModel product) {
         return productGateway.update(id, product);
     }
 
-    public void delete(long id) {
+    public void delete(Long id) {
         productGateway.delete(id);
     }
 }

@@ -21,13 +21,13 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private Long SKU;
 
     @Column(nullable = false, unique = true)
-    private Long code;
+    private Integer code;
 
     @Column(nullable = false)
     private String name;

@@ -26,7 +26,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime created;
@@ -49,7 +49,7 @@ public class UserEntity {
     private String username;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<RoleEntity> role = new ArrayList<>();
+    private Collection<RoleEntity> roles = new ArrayList<>();
 
     private boolean deleted = Boolean.FALSE;
 }

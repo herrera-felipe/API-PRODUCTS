@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "c2043965-a098-4cf6-aef2-42d64c40d68a",
+		"name": "Api-Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "felipeH",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"fherrera@gmail.com\",\r\n    \"firstName\": \"Felipe\",\r\n    \"lastName\": \"Herrera\",\r\n    \"password\": \"123456\",\r\n    \"username\": \"felipeH\",\r\n    \"role\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"fherrera@gmail.com\",\r\n    \"firstName\": \"Felipe\",\r\n    \"lastName\": \"Herrera\",\r\n    \"password\": \"123456\",\r\n    \"username\": \"felipeH\",\r\n    \"role\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/25",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/users/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 205612,\r\n    \"code\": 20220318,\r\n    \"name\": \"Guanabana\",\r\n    \"description\": \"Originario de Sudamérica, se cultiva por sus frutos comestibles en muchos países de clima tropical\",\r\n    \"picture\": \"https://elpoderdelconsumidor.org/wp-content/uploads/2019/07/guanabana-b.jpg\",\r\n    \"price\": 50.1,\r\n    \"currency\": \"s./\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 205612,\r\n    \"code\": 20220318,\r\n    \"name\": \"Guanabana\",\r\n    \"description\": \"Originario de Sudamérica, se cultiva por sus frutos comestibles en muchos países de clima tropical\",\r\n    \"picture\": \"https://elpoderdelconsumidor.org/wp-content/uploads/2019/07/guanabana-b.jpg\",\r\n    \"price\": 150.5,\r\n    \"currency\": \"s./\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/76",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"76"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

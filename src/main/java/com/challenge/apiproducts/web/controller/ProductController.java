@@ -2,13 +2,17 @@ package com.challenge.apiproducts.web.controller;
 
 import com.challenge.apiproducts.domain.products.ProductModel;
 import com.challenge.apiproducts.domain.products.ProductService;
-import com.challenge.apiproducts.web.dto.ProductDTO;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -82,5 +86,36 @@ public class ProductController {
                 .price(model.getPrice())
                 .currency(model.getCurrency())
                 .build();
+    }
+
+    @Data
+    @Builder
+    private static class ProductDTO {
+        private Long id;
+
+        @NotNull
+        @NotBlank
+        @NotEmpty
+        private Long SKU;
+
+        @NotNull
+        @NotBlank
+        @NotEmpty
+        private Integer code;
+
+        @NotNull
+        @NotBlank
+        @NotEmpty
+        private String name;
+
+        private String description;
+        private String picture;
+
+        @NotNull
+        @NotBlank
+        @NotEmpty
+        private Double price;
+
+        private String currency;
     }
 }

@@ -24,12 +24,8 @@ public class UserService {
         return userGateway.update(id, userModel);
     }
 
-    public RoleModel saveRole(RoleModel roleModel) {
-        return userGateway.saveRole(roleModel);
-    }
-
-    public void addRoleToUser(String username, String roleName) {
-        userGateway.addRoleToUser(username, roleName);
+    public UserModel findById(Long id) {
+        return userGateway.findById(id);
     }
 
     public UserModel findByUsername(String username) {

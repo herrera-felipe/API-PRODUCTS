@@ -1,12 +1,10 @@
 package com.challenge.apiproducts.domain.users;
 
-import com.challenge.apiproducts.data.entity.RoleEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Getter
 @Setter
@@ -20,5 +18,5 @@ public class UserModel {
     private String password;
     private LocalDateTime updated;
     private String username;
-    private Collection<RoleEntity> roles;
+    private String role;
 }

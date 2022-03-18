@@ -3,6 +3,7 @@ package com.challenge.apiproducts.domain.security;
 import com.challenge.apiproducts.domain.users.UserModel;
 import com.challenge.apiproducts.domain.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
@@ -25,15 +26,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserModel user = userService.findByUsername(username);
-        if (user == null) {
+        UserModel userModel = userService.findByUsername(username);
+        if (userModel == null) {
             throw new UsernameNotFoundException("User not found in the database");
         } else {
-            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority(role.getName()));
-            });
-            return new User(user.getUsername(), user.getPassword(), authorities);
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(getAuthority(userModel));
+            return new User(userModel.getUsername(), userModel.getPassword(), authorities);
         }
+    }
+
+    private GrantedAuthority getAuthority(UserModel model) {
+        if (model.getRole().equals("admin")) {
+            return new SimpleGrantedAuthority("admin");
+        }
+        if (model.getRole().equals("user")) {
+            return new SimpleGrantedAuthority("user");
+        }
+        if (model.getRole().equals("guest")) {
+            return new SimpleGrantedAuthority("guest");
+        }
+        return null;
     }
 }

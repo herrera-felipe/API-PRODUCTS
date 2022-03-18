@@ -11,8 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Entity
 @Builder
@@ -48,8 +46,12 @@ public class UserEntity {
     @Column(unique = true)
     private String username;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<RoleEntity> roles = new ArrayList<>();
+    /*
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "role_id")
+
+     */
+    private String role;
 
     private boolean deleted = Boolean.FALSE;
 }

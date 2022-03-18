@@ -1,10 +1,8 @@
 package com.challenge.apiproducts.web.controller;
 
-import com.challenge.apiproducts.domain.users.RoleModel;
 import com.challenge.apiproducts.domain.users.UserModel;
 import com.challenge.apiproducts.domain.users.UserService;
-import com.challenge.apiproducts.web.dto.RoleDTO;
-import com.challenge.apiproducts.web.dto.UserDTO;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -51,19 +50,6 @@ public class UserController {
         return ResponseEntity.ok().body(userDTO);
     }
 
-    @PostMapping("/role")
-    public ResponseEntity<RoleDTO> saveRole(@RequestBody RoleDTO dto) {
-        RoleModel roleSaved = userService.saveRole(toRoleModel(dto));
-        RoleDTO roleDTO = toRolDto(roleSaved);
-        return ResponseEntity.status(HttpStatus.CREATED).body(roleDTO);
-    }
-
-    @PostMapping("/add-role")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
-        userService.addRoleToUser(form.getUsername(), form.getRoleName());
-        return ResponseEntity.ok().build();
-    }
-
 
     private UserDTO toUserDto(UserModel userModel) {
         return UserDTO.builder()
@@ -75,7 +61,7 @@ public class UserController {
                 .password(userModel.getPassword())
                 .updated(userModel.getUpdated())
                 .username(userModel.getUsername())
-                .roles(userModel.getRoles())
+                .role(userModel.getRole())
                 .build();
     }
 
@@ -90,7 +76,7 @@ public class UserController {
                 .password(userDTO.getPassword())
                 .updated(userDTO.getUpdated())
                 .username(userDTO.getUsername())
-                .roles(userDTO.getRoles())
+                .role(userDTO.getRole())
                 .build();
     }
 
@@ -99,26 +85,18 @@ public class UserController {
         return users.stream().map(this::toUserDto).collect(toList());
     }
 
-
-    private RoleModel toRoleModel(RoleDTO dto) {
-        return RoleModel.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .build();
-    }
-
-
-    private RoleDTO toRolDto(RoleModel model) {
-        return RoleDTO.builder()
-                .id(model.getId())
-                .name(model.getName())
-                .build();
-    }
-
     @Data
-    private static class RoleToUserForm {
+    @Builder
+    private static class UserDTO {
+        private Long id;
+        private LocalDateTime created;
+        private String email;
+        private String firstName;
+        private String lastName;
+        private String password;
+        private LocalDateTime updated;
         private String username;
-        private String roleName;
+        private String role;
     }
 }
 

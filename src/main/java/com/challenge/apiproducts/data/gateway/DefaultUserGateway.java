@@ -1,10 +1,7 @@
 package com.challenge.apiproducts.data.gateway;
 
-import com.challenge.apiproducts.data.entity.RoleEntity;
 import com.challenge.apiproducts.data.entity.UserEntity;
-import com.challenge.apiproducts.data.repository.RoleRepository;
 import com.challenge.apiproducts.data.repository.UserRepository;
-import com.challenge.apiproducts.domain.users.RoleModel;
 import com.challenge.apiproducts.domain.users.UserGateway;
 import com.challenge.apiproducts.domain.users.UserModel;
 import com.challenge.apiproducts.web.exception.BadRequestException;
@@ -22,13 +19,12 @@ import static java.util.stream.Collectors.*;
 public class DefaultUserGateway implements UserGateway {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+   // private final RoleRepository roleRepository;
 
 
     @Autowired
-    public DefaultUserGateway(UserRepository userRepository, RoleRepository roleRepository) {
+    public DefaultUserGateway(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
 
 
@@ -38,21 +34,6 @@ public class DefaultUserGateway implements UserGateway {
         entity.setCreated(LocalDateTime.now());
         return toModel(userRepository.save(entity));
     }
-
-
-    @Override
-    public RoleModel saveRole(RoleModel roleModel) {
-        return toRoleModel(roleRepository.save(toRoleEntity(roleModel)));
-    }
-
-
-    @Override
-    public void addRoleToUser(String username, String roleName) {
-        UserEntity userEntity = userRepository.findByUsername(username);
-        RoleEntity roleEntity = roleRepository.findByName(roleName);
-        userEntity.getRoles().add(roleEntity);
-    }
-
 
     @Override
     public UserModel findByUsername(String username) {
@@ -68,6 +49,13 @@ public class DefaultUserGateway implements UserGateway {
         return toModel(entity);
     }
 
+    public UserModel findById(Long id) {
+        UserEntity entity = userRepository.findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User not found")
+                );
+        return toModel(entity);
+    }
 
     @Override
     public List<UserModel> findAll() {
@@ -102,7 +90,7 @@ public class DefaultUserGateway implements UserGateway {
                 .password(userModel.getPassword())
                 .updated(userModel.getUpdated())
                 .username(userModel.getUsername())
-                .roles(userModel.getRoles())
+                .role(userModel.getRole())
                 .build();
     }
 
@@ -117,7 +105,7 @@ public class DefaultUserGateway implements UserGateway {
                 .password(entity.getPassword())
                 .updated(entity.getUpdated())
                 .username(entity.getUsername())
-                .roles(entity.getRoles())
+                .role(entity.getRole())
                 .build();
     }
 
@@ -128,23 +116,7 @@ public class DefaultUserGateway implements UserGateway {
         entity.setLastName(model.getLastName());
         entity.setPassword(model.getPassword());
         entity.setUpdated(LocalDateTime.now());
-        entity.setRoles(model.getRoles());
+        entity.setRole(model.getRole());
         return entity;
-    }
-
-
-    private RoleEntity toRoleEntity(RoleModel role) {
-        return RoleEntity.builder()
-                .id(role.getId())
-                .name(role.getName())
-                .build();
-    }
-
-
-    private RoleModel toRoleModel(RoleEntity entity) {
-        return RoleModel.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .build();
     }
 }
